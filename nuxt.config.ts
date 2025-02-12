@@ -8,7 +8,13 @@ export default defineNuxtConfig({
         options: {
             theme: {
                 preset: Aura,
+                options: {
+                    prefix: 'p',
+                    darkModeSelector: 'light',
+                    cssLayer: false
+                }
             },
+            
             ripple: true,
         },
         autoImport: true,

@@ -242,6 +242,7 @@ import Toast from 'primevue/toast';
 import Drawer from 'primevue/drawer';
 import { useToast } from 'primevue/usetoast';
 import { ProductService } from '@/service/ProductService';
+import 'primeicons/primeicons.css';
 
 const products = ref([]);
 const selectedProduct = ref([]);
