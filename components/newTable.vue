@@ -1,11 +1,90 @@
-
-
-
 <template>
     <div class="px-5  h-screen overflow-hidden">
-        <div v-if="loading" class="flex justify-center items-center align-center min-h-screen ">
-            <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
-            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" />
+        <div v-if="loading" class=" min-h-screen my-7 ">
+            <!-- <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" /> -->
+            <div class="flex justify-between">
+
+                <Skeleton height="3rem" width="25rem" class="mb-2 "></Skeleton>
+
+
+                <div class=" flex">
+                    <Skeleton size="3rem" class="mx-2"></Skeleton>
+                    <Skeleton size="3rem" class="mx-2"></Skeleton>
+                    <Skeleton size="3rem" class="mx-2"></Skeleton>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-4 my-3">
+                <Skeleton height="5rem" class=" "></Skeleton>
+                <Skeleton height="5rem" class=" "></Skeleton>
+                <Skeleton height="5rem" class=""></Skeleton>
+                <Skeleton height="5rem" class=" "></Skeleton>
+            </div>
+            <div class="flex justify-end mt-10">
+                <Skeleton height="3rem" class="mx-5" width="30rem"></Skeleton>
+            </div>
+
+            <div class="">
+                <DataTable :value="test">
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+                    <Column>
+                        <template #body>
+                            <Skeleton height="2rem"></Skeleton>
+                        </template>
+                    </Column>
+
+                </DataTable>
+            </div>
+            <div class="flex justify-between m-5">
+                <div class="flex gap-4">
+                    <Skeleton size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton size="3rem" class="mr-2"></Skeleton>
+                </div>
+                <div class="flex justify-center items-center my-3">
+                    <Skeleton size="1rem" class="mr-2"></Skeleton>
+                    <Skeleton size="1rem" class="mr-2"></Skeleton>
+                    <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
+                    <Skeleton size="1rem" class="mr-2"></Skeleton>
+                    <Skeleton size="1rem" class="mr-2"></Skeleton>
+
+                </div>
+            </div>
+
+
+
         </div>
         <div class=" my-7" v-else>
             <div style="display: flex; justify-content: space-between; align-items: center;margin-inline: 20px;">
@@ -25,7 +104,7 @@
                                 :selectedItemTemplate="selectedItemTemplate">
                                 <template #value>
                                     <i class="pi pi-objects-column"
-                                    style="color: slateblue;padding-top: 4px;padding-bottom:4px ;"></i>
+                                        style="color: slateblue;padding-top: 4px;padding-bottom:4px ;"></i>
                                 </template>
                                 <!-- <template #footer>
                                     <div class="p-3 flex justify-between"
@@ -48,9 +127,9 @@
                     <div>
                         <Popover ref="op">
                             <div class="d-flex align-items-center">
-    <i class="pi pi-clock p-2"></i>
-    <span class="p-1">Frequently used time period</span>
-</div>
+                                <i class="pi pi-clock p-2"></i>
+                                <span class="p-1">Frequently used time period</span>
+                            </div>
 
                             <div>
 
@@ -78,31 +157,32 @@
                                 </div>
 
                                 <div class="d-flex align-items-center">
-    <i class="pi pi-file-edit p-2"></i>
-    <span class="p-1">Custom</span>
-</div>
-                  
+                                    <i class="pi pi-file-edit p-2"></i>
+                                    <span class="p-1">Custom</span>
+                                </div>
+
                                 <div>
                                     <div class="card flex flex-wrap justify-center items-end gap-2 px-2">
                                         <FloatLabel class=" w-[200px] py-2">
                                             <DatePicker v-model="startDate" inputId="over_label" showIcon
-                                                iconDisplay="input" @focus="onDatePickerFocus"
-                                                @blur="onDatePickerBlur" placeholder="Start Date"/>
+                                                iconDisplay="input" @focus="onDatePickerFocus" @blur="onDatePickerBlur"
+                                                placeholder="Start Date" />
 
 
                                             <!-- <label for="over_label" class="">Start Date</label> -->
                                         </FloatLabel>
                                         <FloatLabel class=" w-[200px] py-2">
                                             <DatePicker v-model="endDate" inputId="over_label" showIcon
-                                                iconDisplay="input" @focus="onDatePickerFocus"
-                                                @blur="onDatePickerBlur" placeholder="End Date" />
+                                                iconDisplay="input" @focus="onDatePickerFocus" @blur="onDatePickerBlur"
+                                                placeholder="End Date" />
 
 
-                                           
+
                                         </FloatLabel>
                                     </div>
                                     <div class="flex justify-end text-end  p-3">
-                                        <div class="text-blue-700 text-sm font-bold" @click="applyCustomDateFilter">APPLY</div>
+                                        <div class="text-blue-700 text-sm font-bold" @click="applyCustomDateFilter">
+                                            APPLY</div>
                                     </div>
                                 </div>
 
@@ -110,7 +190,7 @@
                         </Popover>
                         <!-- <InputText type="text" v-model="value" @click="openpopover" placeholder="Selected Date Range"
                             class="" style="margin-left: 10px;" /> -->
-                            <Button type="button" icon="pi pi-calendar-plus" @click="openpopover" aria-haspopup="true"
+                        <Button type="button" icon="pi pi-calendar-plus" @click="openpopover" aria-haspopup="true"
                             severity="secondary" aria-controls="overlay_menu" style="margin-left: 10px;" />
 
                     </div>
@@ -126,8 +206,8 @@
                     <div class="flex w-full items-center justify-between space-x-6 text-sm ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="60"
-                                width="60" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="60" width="60">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Invested Amount</span>
@@ -143,8 +223,8 @@
                     <div class="flex w-full items-center justify-between space-x-6 text-sm ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center  ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="60"
-width="60"                                   >
+                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="60" width="60">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Current Value</span>
@@ -160,8 +240,8 @@ width="60"                                   >
                     <div class="flex w-full items-center justify-between space-x-6 ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center  ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="80"
-                                width="80" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="80" width="80">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Overall Gain</span>
@@ -177,8 +257,8 @@ width="60"                                   >
                     <div class="flex w-full items-center justify-between space-x-6 text-sm">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png"alt="" class=" p-2 bg-indigo-50 rounded-full" height="80"
-                                width="80" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="80" width="80">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Today's Gain</span>
@@ -193,64 +273,68 @@ width="60"                                   >
             <div class="card" style="margin: 20px;">
                 <div style="max-height: 700px; overflow: auto;">
                     <div class="flex justify-end border botder-b-0 p-5">
-                    <IconField style="padding-left: 10px;" >
-                        <InputIcon>
-                            <i class="pi pi-search" style="margin-left: 6px;" />
-                        </InputIcon>
-                        <InputText v-model="searchQuery" placeholder="Search" @input="filterProducts" class="w-[400px]" />
-                    </IconField>
-                </div>
-                <div class="border-x my-2">
-                    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" :dataKey="id"
-                        :totalRecords="filteredProducts.length" paginator :rows="rowsPerPage"
-                        tableStyle="min-width: 50rem" size="small" @row-click="navigateToProductDetail" scrollable
-                        scrollHeight="390px" >
-                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                        <Column v-for="col in selectedColumns" :key="col.field" :field="col.field" :header="col.header"
-                            :sortable="true">
-                            <template #body="slotProps">
-                                <div v-if="col.field === 'action'" style="display: flex;">
-                                    <Button icon="pi pi-check" @click="handleDrawerClick(slotProps.data)" severity="secondary"
-                                        size="small" rounded style="margin: 2px;margin-left:0px !important;" />
-                                    <Button icon="pi pi-bookmark" @click="callnewvalue" severity="secondary"
-                                        size="small" rounded style="margin: 2px;padding:2px !important;" />
-                                    <Button icon="pi pi-user"  @click="handleUserClick(slotProps.data)" 
-                                    severity="secondary"
-                                        size="small" rounded style="margin: 2px;padding:2px !important;" />
-                                </div>
-                                <div v-else>
-                                    {{ col.field === 'price'
-                                        ? formatCurrency(slotProps.data.price)
-                                        : col.field === 'date'
-                                            ? new Date(slotProps.data.date).toLocaleDateString()
-                                    : slotProps.data[col.field] }}
+                        <IconField style="padding-left: 10px;">
+                            <InputIcon>
+                                <i class="pi pi-search" style="margin-left: 6px;" />
+                            </InputIcon>
+                            <InputText v-model="searchQuery" placeholder="Search" @input="filterProducts"
+                                class="w-[400px]" />
+                        </IconField>
+                    </div>
+                    <div class="border-x my-2">
+                        <DataTable v-model:selection="selectedProduct" :value="filteredProducts" :dataKey="id"
+                            :totalRecords="filteredProducts.length" paginator :rows="rowsPerPage"
+                            tableStyle="min-width: 50rem" size="small" @row-click="navigateToProductDetail" scrollable
+                            scrollHeight="390px">
+                            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                            <Column v-for="col in selectedColumns" :key="col.field" :field="col.field"
+                                :header="col.header" :sortable="true">
+                                <template #body="slotProps">
+                                    <div v-if="col.field === 'action'" style="display: flex;">
+                                        <Button icon="pi pi-check" @click="handleDrawerClick(slotProps.data)"
+                                            severity="secondary" size="small" rounded
+                                            style="margin: 2px;margin-left:0px !important;" />
+                                        <Button icon="pi pi-bookmark" @click="callnewvalue" severity="secondary"
+                                            size="small" rounded style="margin: 2px;padding:2px !important;" />
+                                        <Button icon="pi pi-user" @click="handleUserClick(slotProps.data)"
+                                            severity="secondary" size="small" rounded
+                                            style="margin: 2px;padding:2px !important;" />
+                                    </div>
+                                    <div v-else>
+                                        {{ col.field === 'price'
+                                            ? formatCurrency(slotProps.data.price)
+                                            : col.field === 'date'
+                                                ? new Date(slotProps.data.date).toLocaleDateString()
+                                                : slotProps.data[col.field] }}
+                                    </div>
+                                </template>
+                            </Column>
+                            <template #empty> No customers found. </template>
+                            <template #paginatorstart>
+                                <div style="display: flex; padding: 5px;">
+                                    <Button v-for="size in [10, 20, 30, 40, 50]" :key="size" :label="size"
+                                        @click="changeRowsPerPage(size)"
+                                        :class="{ 'p-button-primary': rowsPerPage === size, 'p-button-outlined': rowsPerPage !== size }"
+                                        severity="secondary" class="gap-2 mx-2 flex justify-start text-start" />
                                 </div>
                             </template>
-                        </Column>
-                        <template #empty> No customers found. </template>
-                        <template #paginatorstart>
-    <div style="display: flex; padding: 5px;">
-        <Button v-for="size in [10, 20,30,40,50]" :key="size" :label="size" @click="changeRowsPerPage(size)"
-            :class="{ 'p-button-primary': rowsPerPage === size, 'p-button-outlined': rowsPerPage !== size }" severity="secondary"  class="gap-2 mx-2 flex justify-start text-start"/>
-    </div>
-</template>
 
-                    </DataTable>
-                </div>
+                        </DataTable>
+                    </div>
 
 
                 </div>
             </div>
         </div>
         <Drawer v-model:visible="visibleRight" position="right" :style="{ width: '80%' }">
-    <template #header>
-        <!-- Leave this empty to remove the header -->
-    </template>
-    <DrawerDesktop :leadData="selectedLeadData" />
-</Drawer>
+            <template #header>
+                <!-- Leave this empty to remove the header -->
+            </template>
+            <DrawerDesktop :leadData="selectedLeadData" />
+        </Drawer>
 
         <Toast />
-       
+
     </div>
 </template>
 
@@ -274,6 +358,7 @@ import Drawer from 'primevue/drawer';
 import { useConfirm } from "primevue/useconfirm";
 import DatePicker from 'primevue/datepicker';
 import { defineEmits } from 'vue';
+import Skeleton from 'primevue/skeleton';
 import 'primeicons/primeicons.css'
 const startDate = ref(null);
 const endDate = ref(null);
@@ -293,7 +378,7 @@ const menu = ref();
 const value = ref('');
 const selectedLeadData = ref(null);
 
-
+const test = ref(new Array(6));
 const emit = defineEmits([]);
 const handleMenuAction = (action) => {
     if (action === 'export') {
@@ -317,8 +402,8 @@ const selectedColumns = ref([
     { field: 'action', header: 'Action' }
 ]);
 const handleUserClick = (product) => {
- 
-    console.log(selectedLeadData,"selectedLeadData");
+
+    console.log(selectedLeadData, "selectedLeadData");
     navigateToProductDetail(product);
 };
 const formatDate = (date) => {
@@ -429,38 +514,38 @@ const fetchProducts = async () => {
     }
 };
 const callnewvalue = async () => {
-  const api = 'https://teamo.gwcindia.in/json-check/cache-redis.php?file=gowtham';
+    const api = 'https://teamo.gwcindia.in/json-check/cache-redis.php?file=gowtham';
 
-  try {
-    const res = await fetch(api, {
-      method: 'GET',
-    });
+    try {
+        const res = await fetch(api, {
+            method: 'GET',
+        });
 
-    if (!res.ok) throw new Error("HTTPerror! Status:");
+        if (!res.ok) throw new Error("HTTPerror! Status:");
 
-   
-    showToast = true; 
-    // Set the toast message and type for success
-    toastMessage = "API call was successful!";
-    toastType = "success";  // You can define types in your Toast component
-      // Show the toast
 
-    // Hide the toast after 3 seconds (optional)
-    setTimeout(() => {
-     showToast = false;
-    }, 3000);
+        showToast = true;
+        // Set the toast message and type for success
+        toastMessage = "API call was successful!";
+        toastType = "success";  // You can define types in your Toast component
+        // Show the toast
 
-  } catch (error) {
-    console.error("Error:", error.message);
+        // Hide the toast after 3 seconds (optional)
+        setTimeout(() => {
+            showToast = false;
+        }, 3000);
 
-    // Set the toast message and type for error
-    toast.add({ severity: 'success', summary: 'Done', detail: 'API Called Succefully !', life: 3000 });
+    } catch (error) {
+        console.error("Error:", error.message);
 
-    // Hide the toast after 3 seconds (optional)
-    setTimeout(() => {
-      this.showToast = false;
-    }, 3000);
-  }
+        // Set the toast message and type for error
+        toast.add({ severity: 'success', summary: 'Done', detail: 'API Called Succefully !', life: 3000 });
+
+        // Hide the toast after 3 seconds (optional)
+        setTimeout(() => {
+            this.showToast = false;
+        }, 3000);
+    }
 };
 
 const isInteractingWithDatePicker = ref(false);
@@ -520,7 +605,7 @@ const clearFilter = () => {
     searchQuery.value = '';
     selectedCategories.value = [];
     dateFilter.value = null;
- 
+
     value.value = '';
     startDate.value = new Date(now.setDate(now.getDate() - 7)); // Set start date to 7 days ago
     endDate.value = new Date();
@@ -601,19 +686,20 @@ const applyCustomDateFilter = () => {
 
 </script>
 
-<style >
-.p-drawer-content{
+<style>
+.p-drawer-content {
     flex-grow: none !important;
-    overflow-y:none !important;
+    overflow-y: none !important;
     padding-left: none !important;
-    padding-right:none !important;
+    padding-right: none !important;
     padding-top: 10px !important;
     padding-bottom: none !important;
 }
+
 .p-drawer-header {
     display: none !important;
     flex-shrink: 0;
-    align-items: none ;
+    align-items: none;
     justify-content: space-between;
     padding: 0px !important;
 }

@@ -1,8 +1,59 @@
 <template>
     <div class="px-5 mt-8">
-        <div v-if="loading" class="flex justify-center items-center align-center min-h-screen ">
-            <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
-            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" />
+        <div v-if="loading" class=" min-h-screen ">
+            <!-- <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" /> -->
+            <div class="flex">
+
+                <Skeleton height="2rem" class="mb-2 "></Skeleton>
+
+
+                <div class=" flex">
+                    <Skeleton size="2rem" class="mx-2"></Skeleton>
+                    <Skeleton size="2rem" class="mx-2"></Skeleton>
+                    <Skeleton size="2rem" class="mx-2"></Skeleton>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 my-3">
+                <Skeleton height="5rem" class=" "></Skeleton>
+                <Skeleton height="5rem" class=" "></Skeleton>
+                <Skeleton height="5rem" class=""></Skeleton>
+                <Skeleton height="5rem" class=" "></Skeleton>
+            </div>
+            <div class="flex justify-end my-2">
+                <Skeleton height="2rem" class="" width="10rem"></Skeleton>
+            </div>
+           
+    <div class="">
+        <DataTable :value="test">
+            <Column >
+                <template #body>
+                    <Skeleton height="2rem"></Skeleton>
+                </template>
+            </Column>
+            <Column >
+                <template #body>
+                    <Skeleton height="2rem"></Skeleton>
+                </template>
+            </Column>
+            <Column >
+                <template #body>
+                    <Skeleton height="2rem"></Skeleton>
+                </template>
+            </Column>
+         
+        </DataTable>
+    </div>
+    <div class="flex justify-center items-center my-3">
+        <Skeleton size="1rem" class="mr-2"></Skeleton>
+        <Skeleton size="1rem" class="mr-2"></Skeleton>
+            <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
+            <Skeleton size="1rem" class="mr-2"></Skeleton>
+            <Skeleton size="1rem" class="mr-2"></Skeleton>
+        
+    </div>
+
+
         </div>
         <div v-else>
             <div class="flex justify-between">
@@ -113,8 +164,8 @@
                     <div class="flex w-full items-center justify-between space-x-6 text-sm ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="60"
-                                width="60" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="60" width="60">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Invested Amount</span>
@@ -130,8 +181,8 @@
                     <div class="flex w-full items-center justify-between space-x-6 text-sm ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center  ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="60"
-width="60"                                   >
+                                <img src="https://cdn-icons-png.flaticon.com/128/16416/16416833.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="60" width="60">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Current Value</span>
@@ -147,8 +198,8 @@ width="60"                                   >
                     <div class="flex w-full items-center justify-between space-x-6 ">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center  ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt="" class=" p-2 bg-indigo-50 rounded-full" height="80"
-                                width="80" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="80" width="80">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Overall Gain</span>
@@ -164,8 +215,8 @@ width="60"                                   >
                     <div class="flex w-full items-center justify-between space-x-6 text-sm">
                         <div class="flex truncate">
                             <div class="flex justify-center items-center ">
-                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png"alt="" class=" p-2 bg-indigo-50 rounded-full" height="80"
-                                width="80" >
+                                <img src="https://cdn-icons-png.flaticon.com/128/5501/5501360.png" alt=""
+                                    class=" p-2 bg-indigo-50 rounded-full" height="80" width="80">
                             </div>
                             <div class="w-full p-1 mt-2 ">
                                 <span class="text-slate-400 text-md font-semibold">Today's Gain</span>
@@ -248,6 +299,9 @@ import { useToast } from 'primevue/usetoast';
 import { ProductService } from '@/service/ProductService';
 import 'primeicons/primeicons.css';
 
+
+import Skeleton from 'primevue/skeleton';
+
 const products = ref([]);
 const selectedProduct = ref([]);
 const searchQuery = ref('');
@@ -256,7 +310,7 @@ const visibleRight = ref(false);
 
 const menu = ref(null);
 const startDate = ref(new Date(new Date().setDate(new Date().getDate() - 7))); // 7 days ago
- // Set the initial value to today's date
+// Set the initial value to today's date
 const endDate = ref(new Date());   // Set the initial value to today's date
 const dateFilter = ref(null);
 const value = ref('');
@@ -264,7 +318,7 @@ const selectedLeadData = ref(null);
 const selectedColumns = ref([
     { field: 'code', header: 'Code' },
     { field: 'name', header: 'Name' },
-    { field: 'date', header: 'Date' },
+    // { field: 'date', header: 'Date' },
     { field: 'action', header: 'Action' }
 ]);
 
@@ -272,7 +326,7 @@ const selectedColumns = ref([
 const columns = ref([
     { field: 'code', header: 'Code' },
     { field: 'name', header: 'Name' },
-    { field: 'date', header: 'Date' },
+    // { field: 'date', header: 'Date' },
     { field: 'action', header: 'Action' }
 ]);
 const formatDate = (date) => {
@@ -287,7 +341,7 @@ const formatDate = (date) => {
 
 const setDateFilter = (filter) => {
     const now = new Date();
-    
+
     // Use the reactive references directly
     if (filter === 'week') {
         startDate.value = new Date(now.setDate(now.getDate() - 7));
@@ -304,7 +358,7 @@ const setDateFilter = (filter) => {
     } else if (filter === 'ytd') {
         startDate.value = new Date(now.setFullYear(now.getFullYear(), 0, 1));
     }
-    
+
     endDate.value = new Date(); // Set endDate to today
     dateFilter.value = { start: startDate.value, end: endDate.value };
     console.log(`Filter applied from ${startDate.value.toLocaleDateString()} to ${endDate.value.toLocaleDateString()}`);
@@ -389,7 +443,7 @@ const selectedItemTemplate = (selected) => {
 };
 const loading = ref(true);
 onMounted(() => {
-    
+
     ProductService.getProductsMini().then((data) => {
         products.value = data;
     });
@@ -427,6 +481,7 @@ const refreshData = () => {
         fetchProducts();
     }
 };
+const test = ref(new Array(6));
 </script>
 
 
@@ -455,20 +510,24 @@ const refreshData = () => {
 .p-multiselect {
     border: none !important;
 }
+
 .p-datepicker-input-icon-container {
 
-top: 40% !important;
+    top: 40% !important;
 
 }
+
 .p-checkbox-checked .p-checkbox-box {
-border-color: rgb(13, 120, 221) !important; 
- background:rgb(13, 120, 221)  !important; 
+    border-color: rgb(13, 120, 221) !important;
+    background: rgb(13, 120, 221) !important;
 }
+
 .p-paginator-page.p-paginator-page-selected {
-background:  rgb(197, 218, 236) !important;
-color: rgb(13, 120, 221) !important;
+    background: rgb(197, 218, 236) !important;
+    color: rgb(13, 120, 221) !important;
 }
-.p-multiselect-header{
-padding: 15px !important;
+
+.p-multiselect-header {
+    padding: 15px !important;
 }
 </style>
