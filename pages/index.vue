@@ -104,7 +104,7 @@
 
             </div>
 
-            <ul role="list" class="grid  gap-2 grid-cols-2 lg:grid-cols-2 pt-4">
+            <ul role="list" class="grid  gap-2 grid-cols-2 lg:grid-cols-4 pt-4">
                 <li class="col-span-1 rounded-lg bg-white shadow p-2">
                     <div class="flex w-full items-center justify-between space-x-6 text-sm ">
                         <div class="flex truncate">
@@ -403,10 +403,11 @@ const selectedItemTemplate = (selected) => {
 };
 
 onMounted(() => {
-    debugger
+    
     ProductService.getProductsMini().then((data) => {
         products.value = data;
     });
+    setDateFilter('week');
 });
 
 const menus = ref([
