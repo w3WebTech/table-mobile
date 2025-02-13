@@ -1,6 +1,10 @@
 <template>
     <div class="px-5 mt-8">
-        <div>
+        <div v-if="loading" class="flex justify-center items-center align-center min-h-screen ">
+            <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" />
+        </div>
+        <div v-else>
             <div class="flex justify-between">
                 <div>
                     <div class="text-blue-500 font-semibold">Statements For</div>
@@ -187,7 +191,7 @@ width="60"                                   >
                         :totalRecords="filteredProducts.length" paginator :rows="rowsPerPage" size="small"
                         @row-click="navigateToProductDetail" scrollable scrollHeight="550px"
                         class="text-xs md:text-sm py-2">
-                        <Column selectionMode="multiple"></Column>
+                        <!-- <Column selectionMode="multiple"></Column> -->
                         <Column v-for="col in selectedColumns" :key="col.field" :field="col.field" :header="col.header"
                             :sortable="true">
                             <template #body="slotProps">
@@ -251,7 +255,8 @@ const rowsPerPage = ref(10);
 const visibleRight = ref(false);
 
 const menu = ref(null);
-const startDate = ref(new Date()); // Set the initial value to today's date
+const startDate = ref(new Date(new Date().setDate(new Date().getDate() - 7))); // 7 days ago
+ // Set the initial value to today's date
 const endDate = ref(new Date());   // Set the initial value to today's date
 const dateFilter = ref(null);
 const value = ref('');
@@ -282,32 +287,29 @@ const formatDate = (date) => {
 
 const setDateFilter = (filter) => {
     const now = new Date();
-    let startDate, endDate;
     
-    // Create fresh instances of dates to avoid mutation of the 'now' object.
-    const start = new Date(now);
-    const end = new Date(now);
-    
+    // Use the reactive references directly
     if (filter === 'week') {
-        start.setDate(now.getDate() - 7);
+        startDate.value = new Date(now.setDate(now.getDate() - 7));
     } else if (filter === '15days') {
-        start.setDate(now.getDate() - 15);
+        startDate.value = new Date(now.setDate(now.getDate() - 15));
     } else if (filter === 'month') {
-        start.setMonth(now.getMonth() - 1);
+        startDate.value = new Date(now.setMonth(now.getMonth() - 1));
     } else if (filter === '3months') {
-        start.setMonth(now.getMonth() - 3);
+        startDate.value = new Date(now.setMonth(now.getMonth() - 3));
     } else if (filter === 'year') {
-        start.setFullYear(now.getFullYear() - 1);
+        startDate.value = new Date(now.setFullYear(now.getFullYear() - 1));
     } else if (filter === '6months') {
-        start.setMonth(now.getMonth() - 6);
+        startDate.value = new Date(now.setMonth(now.getMonth() - 6));
     } else if (filter === 'ytd') {
-        start.setMonth(0);
-        start.setDate(1);
+        startDate.value = new Date(now.setFullYear(now.getFullYear(), 0, 1));
     }
     
-    dateFilter.value = { start: start, end: end };
-    console.log(`Filter applied from ${start.toLocaleDateString()} to ${end.toLocaleDateString()}`);
+    endDate.value = new Date(); // Set endDate to today
+    dateFilter.value = { start: startDate.value, end: endDate.value };
+    console.log(`Filter applied from ${startDate.value.toLocaleDateString()} to ${endDate.value.toLocaleDateString()}`);
 };
+
 
 
 const onDatePickerFocus = () => {
@@ -343,26 +345,14 @@ const formatDateToYYYYMMDD = (date) => {
 const filteredProducts = computed(() => {
     let filtered = products.value;
 
-    // if (dateFilter.value) {
-    //     const { start, end } = dateFilter.value;
-    //     const startDateStr = start.toLocaleDateString('en-US');
-    //     const endDateStr = end.toLocaleDateString('en-US');
-
-    //     filtered = filtered.filter(product => {
-    //         const productDate = new Date(product.date);
-    //         const productDateStr = productDate.toLocaleDateString('en-US');
-    //         return productDateStr >= startDateStr && productDateStr <= endDateStr;
-    //     });
-    // }
     if (dateFilter.value) {
         const { start, end } = dateFilter.value;
         console.log(`Filtering from ${start} to ${end}`); // Debugging line
         filtered = filtered.filter(product => {
             const productDate = new Date(product.date);
-            return productDate >= start && productDate <= end; // Ensure correct comparison
+            return productDate.getTime() >= start.getTime() && productDate.getTime() <= end.getTime();
         });
     }
-
 
     if (searchQuery.value) {
         filtered = filtered.filter(product => {
@@ -374,17 +364,13 @@ const filteredProducts = computed(() => {
 
     return filtered;
 });
-
 const applyCustomDateFilter = () => {
     if (startDate.value && endDate.value) {
-        const startDateStr = startDate.value.toLocaleDateString('en-US');
-        const endDateStr = endDate.value.toLocaleDateString('en-US');
-        value.value = `${startDateStr} to ${endDateStr}`;
-
+        console.log('Start Date:', startDate.value);
+        console.log('End Date:', endDate.value);
         dateFilter.value = { start: startDate.value, end: endDate.value };
-
-        op.value.toggle(event);
         console.log('Custom Date Filter Applied:', dateFilter.value);
+        op.value.toggle(event);
     }
 };
 
@@ -401,13 +387,16 @@ const clearFilter = () => {
 const selectedItemTemplate = (selected) => {
     return selected.length ? 'Select Column' : 'Select Columns';
 };
-
+const loading = ref(true);
 onMounted(() => {
     
     ProductService.getProductsMini().then((data) => {
         products.value = data;
     });
     setDateFilter('week');
+    setTimeout(() => {
+        loading.value = false; // Hide the spinner after 2 seconds
+    }, 2000);
 });
 
 const menus = ref([
@@ -465,5 +454,21 @@ const refreshData = () => {
 
 .p-multiselect {
     border: none !important;
+}
+.p-datepicker-input-icon-container {
+
+top: 40% !important;
+
+}
+.p-checkbox-checked .p-checkbox-box {
+border-color: rgb(13, 120, 221) !important; 
+ background:rgb(13, 120, 221)  !important; 
+}
+.p-paginator-page.p-paginator-page-selected {
+background:  rgb(197, 218, 236) !important;
+color: rgb(13, 120, 221) !important;
+}
+.p-multiselect-header{
+padding: 15px !important;
 }
 </style>
