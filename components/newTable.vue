@@ -3,7 +3,11 @@
 
 <template>
     <div class="px-5  h-screen overflow-hidden">
-        <div class=" my-7">
+        <div v-if="loading" class="flex justify-center items-center align-center min-h-screen ">
+            <ProgressSpinner style="width: 100px; height: 100px" strokeWidth="5" fill="transparent"
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" class="my-10" />
+        </div>
+        <div class=" my-7" v-else>
             <div style="display: flex; justify-content: space-between; align-items: center;margin-inline: 20px;">
                 <div>
                     <div class="text-blue-500 font-semibold text-xl">Statements For</div>
@@ -479,12 +483,16 @@ const openpopover = (event) => {
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
+const loading = ref(true);
 onMounted(() => {
     fetchProducts();
     const now = new Date();
     startDate.value = new Date(now.setDate(now.getDate() - 7)); // Set start date to 7 days ago
     endDate.value = new Date(); // Set end date to today
     setDateFilter('week');
+    setTimeout(() => {
+        loading.value = false; // Hide the spinner after 2 seconds
+    }, 2000);
 });
 const togglemenu = (event) => {
     menu.value.toggle(event);
